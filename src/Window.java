@@ -8,13 +8,14 @@ public class Window extends JFrame {
     private int windowNumber;
     private int buttonValue = 0;
 
-    public Window(int windowNumber, int width, int height) {
+    public Window(int windowNumber, int width, int height, int x, int y) {
 
         super("Window #" + windowNumber);
         this.windowNumber = windowNumber;
 
         setSize(width, height);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocation(x, y);
 
         numberButton = new JButton(String.valueOf(buttonValue));
         add(numberButton, BorderLayout.CENTER);
@@ -26,8 +27,6 @@ public class Window extends JFrame {
             }
         });
 
-
-
         setVisible(true);
     }
 
@@ -35,15 +34,12 @@ public class Window extends JFrame {
         new Thread(() -> {
             try {
                 while (true) {
-                    // Increment the button's value
                     buttonValue++;
                     numberButton.setText(String.valueOf(buttonValue));
 
-                    // Sleep for `windowNumber` seconds
                     Thread.sleep(windowNumber * 1000);
                 }
             } catch (InterruptedException ex) {
-                // Handle interruption
                 Thread.currentThread().interrupt();
             }
         }).start();
